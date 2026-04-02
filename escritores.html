@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="pt-pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Escritores - O Subterfúgio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Spectral:ital,wght@0,300;0,400;1,300&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --ink: #0a0a0b;
+        --parchment: #e8e0d4;
+        --crimson: #8b1a1a;
+        --crimson-glow: #a52222;
+        --bone: #d4ccc0;
+        --ash: #2a2a2e;
+        --text-dim: #6b6560;
+        --text-body: #9e958a;
+        --sepia: #8a7560;
+        --sepia-glow: #a08a70;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: var(--ink);
+        color: var(--parchment);
+        font-family: "Cormorant Garamond", "Georgia", serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 80% 60% at 20% 10%,
+            rgba(139, 26, 26, 0.04) 0%,
+            transparent 70%
+          ),
+          radial-gradient(
+            ellipse 60% 80% at 80% 90%,
+            rgba(139, 26, 26, 0.03) 0%,
+            transparent 70%
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        opacity: 0.035;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 9999;
+      }
+
+      /* ── HEADER ── */
+      header {
+        position: relative;
+        z-index: 10;
+        padding: 2rem 2rem 1.5rem;
+        border-bottom: 1px solid rgba(196, 185, 168, 0.08);
+      }
+
+      #main-title {
+        font-family: "Cinzel Decorative", "Georgia", serif;
+        font-size: clamp(1.4rem, 3vw, 1.8rem);
+        font-weight: 400;
+        letter-spacing: 0.15em;
+        color: var(--parchment);
+        text-align: center;
+        margin-bottom: 1.2rem;
+      }
+
+      nav {
+        display: flex;
+        justify-content: center;
+        gap: 0.2rem;
+        flex-wrap: wrap;
+      }
+
+      nav a {
+        font-family: "Spectral", serif;
+        font-size: 0.82rem;
+        font-weight: 300;
+        font-style: italic;
+        color: var(--text-dim);
+        text-decoration: none;
+        padding: 0.4rem 0.9rem;
+        letter-spacing: 0.04em;
+        transition: color 0.4s ease;
+        position: relative;
+      }
+
+      nav a::after {
+        content: "";
+        position: absolute;
+        bottom: 2px;
+        left: 50%;
+        width: 0;
+        height: 1px;
+        background: var(--crimson);
+        transition: all 0.4s ease;
+        transform: translateX(-50%);
+      }
+
+      nav a:hover {
+        color: var(--parchment);
+      }
+      nav a:hover::after {
+        width: 60%;
+      }
+      nav a[aria-current="page"] {
+        color: var(--crimson-glow);
+      }
+      nav a[aria-current="page"]::after {
+        width: 60%;
+        background: var(--crimson);
+      }
+
+      /* ── MAIN ── */
+      main {
+        position: relative;
+        z-index: 1;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 4rem 2rem 6rem;
+      }
+
+      .hero-section {
+        text-align: center;
+        margin-bottom: 4rem;
+        animation: fadeIn 1.2s ease both;
+      }
+
+      .hero-section h2 {
+        font-family: "Cinzel Decorative", serif;
+        font-size: clamp(1.4rem, 4vw, 2.4rem);
+        font-weight: 400;
+        letter-spacing: 0.08em;
+        color: var(--parchment);
+        margin-bottom: 1rem;
+      }
+
+      .hero-section .subtitle {
+        font-family: "Spectral", serif;
+        font-size: 1.05rem;
+        font-weight: 300;
+        font-style: italic;
+        color: var(--text-dim);
+        line-height: 1.7;
+      }
+
+      .divider {
+        width: 60px;
+        height: 1px;
+        background: var(--crimson);
+        margin: 2.5rem auto;
+        opacity: 0.6;
+      }
+
+      /* ── WRITERS GRID ── */
+      .writers-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 2rem;
+      }
+
+      @media (max-width: 600px) {
+        .writers-grid {
+          grid-template-columns: 1fr;
+          gap: 1.8rem;
+        }
+      }
+
+      /* ── WRITER CARD ── */
+      .writer-card {
+        background: linear-gradient(
+          160deg,
+          rgba(42, 42, 46, 0.5) 0%,
+          rgba(26, 26, 28, 0.8) 100%
+        );
+        border: 1px solid rgba(196, 185, 168, 0.06);
+        border-radius: 2px;
+        overflow: hidden;
+        position: relative;
+        transition:
+          border-color 0.5s ease,
+          transform 0.4s ease;
+        opacity: 0;
+        transform: translateY(16px);
+      }
+
+      .writer-card.visible {
+        opacity: 1;
+        transform: translateY(0);
+        transition:
+          opacity 0.5s ease,
+          transform 0.5s ease,
+          border-color 0.5s ease;
+      }
+
+      .writer-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--crimson),
+          transparent
+        );
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        z-index: 2;
+      }
+
+      .writer-card:hover {
+        border-color: rgba(196, 185, 168, 0.12);
+        transform: translateY(-4px);
+      }
+
+      .writer-card:hover::before {
+        opacity: 0.5;
+      }
+
+      .writer-portrait {
+        position: relative;
+        aspect-ratio: 3 / 4;
+        background: var(--ash);
+        overflow: hidden;
+      }
+
+      .writer-portrait img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        opacity: 0.82;
+        filter: saturate(0.6);
+        transition:
+          opacity 0.5s ease,
+          filter 0.5s ease,
+          transform 0.6s ease;
+      }
+
+      .writer-card:hover .writer-portrait img {
+        opacity: 0.95;
+        filter: saturate(0.8);
+        transform: scale(1.03);
+      }
+
+      /* Nation badge */
+      .nation-badge {
+        position: absolute;
+        top: 0.7rem;
+        right: 0.7rem;
+        font-family: "Spectral", serif;
+        font-size: 0.62rem;
+        font-weight: 300;
+        font-style: italic;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--sepia-glow);
+        background: rgba(10, 10, 11, 0.85);
+        border: 1px solid rgba(138, 117, 96, 0.3);
+        padding: 0.2rem 0.6rem;
+        backdrop-filter: blur(4px);
+        z-index: 2;
+      }
+
+      .writer-info {
+        padding: 1.2rem 1.4rem;
+      }
+
+      .writer-name {
+        font-family: "Cinzel Decorative", serif;
+        font-size: 1rem;
+        font-weight: 400;
+        letter-spacing: 0.04em;
+        color: var(--bone);
+        line-height: 1.35;
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        padding: 2rem;
+        border-top: 1px solid rgba(196, 185, 168, 0.06);
+      }
+
+      footer p {
+        font-family: "Spectral", serif;
+        font-size: 0.78rem;
+        font-weight: 300;
+        font-style: italic;
+        color: var(--text-dim);
+        letter-spacing: 0.04em;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1 id="main-title">O Subterfúgio</h1>
+      <nav>
+        <a href="index.html">Início</a>
+        <a href="escritores.html" aria-current="page">Escritores</a>
+        <a href="donereads.html">Leituras</a>
+        <a href="contos.html">Contos</a>
+        <a href="contato.html">Contato</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="galeria.html">Dark Art</a>
+        <a href="tracks.html">Tracks</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero-section">
+        <h2>Biografias em Destaque</h2>
+        <div class="divider"></div>
+        <p class="subtitle">Os autores que habitam as páginas deste diário.</p>
+      </section>
+
+      <div class="writers-grid">
+        <article class="writer-card">
+          <div class="writer-portrait">
+            <span class="nation-badge">Rússia</span>
+            <img src="Fiodor.jpg" alt="Fiódor Dostoiévski" loading="lazy" />
+          </div>
+          <div class="writer-info">
+            <div class="writer-name">Fiódor Dostoiévski</div>
+          </div>
+        </article>
+
+        <article class="writer-card">
+          <div class="writer-portrait">
+            <span class="nation-badge">Ucrânia</span>
+            <img src="bulgakov.jpg" alt="Mikhail Bulgákov" loading="lazy" />
+          </div>
+          <div class="writer-info">
+            <div class="writer-name">Mikhail Bulgákov</div>
+          </div>
+        </article>
+
+        <article class="writer-card">
+          <div class="writer-portrait">
+            <span class="nation-badge">Ucrânia</span>
+            <img src="vassili.png" alt="Vassili Grossman" loading="lazy" />
+          </div>
+          <div class="writer-info">
+            <div class="writer-name">Vassili Grossman</div>
+          </div>
+        </article>
+
+        <article class="writer-card">
+          <div class="writer-portrait">
+            <span class="nation-badge">Belarus</span>
+            <img src="Svetlana.png" alt="Svetlana Alexijevich" loading="lazy" />
+          </div>
+          <div class="writer-info">
+            <div class="writer-name">Svetlana Alexijevich</div>
+          </div>
+        </article>
+
+        <article class="writer-card">
+          <div class="writer-portrait">
+            <span class="nation-badge">Brasil</span>
+            <img
+              src="Ana_Claudia.jpg"
+              alt="Ana Claudia Quintana Arantes"
+              loading="lazy"
+            />
+          </div>
+          <div class="writer-info">
+            <div class="writer-name">Ana Claudia Quintana Arantes</div>
+          </div>
+        </article>
+
+        <article class="writer-card">
+          <div class="writer-portrait">
+            <span class="nation-badge">Hungria</span>
+            <img
+              src="Krasznahorkai_László_portrait.jpg"
+              alt="László Krasznahorkai"
+              loading="lazy"
+            />
+          </div>
+          <div class="writer-info">
+            <div class="writer-name">László Krasznahorkai</div>
+          </div>
+        </article>
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 — Diário de Leituras | Fausto Pantagruel</p>
+    </footer>
+
+    <script>
+      var cards = document.querySelectorAll(".writer-card");
+
+      function revealCards() {
+        for (var i = 0; i < cards.length; i++) {
+          var rect = cards[i].getBoundingClientRect();
+          if (rect.top < window.innerHeight - 40) {
+            (function (el, delay) {
+              setTimeout(function () {
+                el.classList.add("visible");
+              }, delay);
+            })(cards[i], i * 120);
+          }
+        }
+      }
+
+      revealCards();
+      window.addEventListener("scroll", revealCards);
+    </script>
+  </body>
+</html>

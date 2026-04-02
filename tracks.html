@@ -1,0 +1,760 @@
+<!doctype html>
+<html lang="pt-pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tracks - O Subterfúgio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Spectral:ital,wght@0,300;0,400;1,300&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --ink: #0a0a0b;
+        --parchment: #e8e0d4;
+        --crimson: #8b1a1a;
+        --crimson-glow: #a52222;
+        --bone: #d4ccc0;
+        --ash: #2a2a2e;
+        --text-dim: #6b6560;
+        --text-body: #9e958a;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: var(--ink);
+        color: var(--parchment);
+        font-family: "Cormorant Garamond", "Georgia", serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 80% 60% at 20% 10%,
+            rgba(139, 26, 26, 0.04) 0%,
+            transparent 70%
+          ),
+          radial-gradient(
+            ellipse 60% 80% at 80% 90%,
+            rgba(139, 26, 26, 0.03) 0%,
+            transparent 70%
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        opacity: 0.035;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 9999;
+      }
+
+      /* ── HEADER ── */
+      header {
+        position: relative;
+        z-index: 10;
+        padding: 2rem 2rem 1.5rem;
+        border-bottom: 1px solid rgba(196, 185, 168, 0.08);
+      }
+
+      #main-title {
+        font-family: "Cinzel Decorative", "Georgia", serif;
+        font-size: clamp(1.4rem, 3vw, 1.8rem);
+        font-weight: 400;
+        letter-spacing: 0.15em;
+        color: var(--parchment);
+        text-align: center;
+        margin-bottom: 1.2rem;
+      }
+
+      nav {
+        display: flex;
+        justify-content: center;
+        gap: 0.2rem;
+        flex-wrap: wrap;
+      }
+
+      nav a {
+        font-family: "Spectral", serif;
+        font-size: 0.82rem;
+        font-weight: 300;
+        font-style: italic;
+        color: var(--text-dim);
+        text-decoration: none;
+        padding: 0.4rem 0.9rem;
+        letter-spacing: 0.04em;
+        transition: color 0.4s ease;
+        position: relative;
+      }
+
+      nav a::after {
+        content: "";
+        position: absolute;
+        bottom: 2px;
+        left: 50%;
+        width: 0;
+        height: 1px;
+        background: var(--crimson);
+        transition: all 0.4s ease;
+        transform: translateX(-50%);
+      }
+
+      nav a:hover {
+        color: var(--parchment);
+      }
+      nav a:hover::after {
+        width: 60%;
+      }
+      nav a[aria-current="page"] {
+        color: var(--crimson-glow);
+      }
+      nav a[aria-current="page"]::after {
+        width: 60%;
+        background: var(--crimson);
+      }
+
+      /* ── MAIN ── */
+      main {
+        position: relative;
+        z-index: 1;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 4rem 2rem 6rem;
+      }
+
+      .hero-section {
+        text-align: center;
+        margin-bottom: 4rem;
+        animation: fadeIn 1.2s ease both;
+      }
+
+      .hero-section h2 {
+        font-family: "Cinzel Decorative", serif;
+        font-size: clamp(1.6rem, 4.5vw, 2.8rem);
+        font-weight: 400;
+        letter-spacing: 0.08em;
+        color: var(--parchment);
+        margin-bottom: 1rem;
+      }
+
+      .hero-section .subtitle {
+        font-family: "Spectral", serif;
+        font-size: 1.05rem;
+        font-weight: 300;
+        font-style: italic;
+        color: var(--text-dim);
+        max-width: 520px;
+        margin: 0 auto;
+        line-height: 1.7;
+      }
+
+      .divider {
+        width: 60px;
+        height: 1px;
+        background: var(--crimson);
+        margin: 2.5rem auto;
+        opacity: 0.6;
+      }
+
+      /* ── LASTFM CARD ── */
+      .lastfm-card {
+        background: linear-gradient(
+          160deg,
+          rgba(42, 42, 46, 0.5) 0%,
+          rgba(26, 26, 28, 0.8) 100%
+        );
+        border: 1px solid rgba(196, 185, 168, 0.06);
+        border-radius: 2px;
+        padding: 2.5rem 2rem;
+        max-width: 480px;
+        margin: 0 auto 4rem;
+        position: relative;
+        overflow: hidden;
+        transition:
+          border-color 0.5s ease,
+          transform 0.4s ease;
+        animation: slideUp 0.8s ease both;
+        animation-delay: 0.2s;
+        text-align: center;
+      }
+
+      .lastfm-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--crimson),
+          transparent
+        );
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+
+      .lastfm-card:hover {
+        border-color: rgba(196, 185, 168, 0.12);
+        transform: translateY(-3px);
+      }
+      .lastfm-card:hover::before {
+        opacity: 0.5;
+      }
+
+      .lastfm-card .card-icon {
+        font-size: 1.6rem;
+        margin-bottom: 1.2rem;
+        display: block;
+        opacity: 0.7;
+      }
+
+      .lastfm-card h3 {
+        font-family: "Cinzel Decorative", serif;
+        font-size: 1.15rem;
+        font-weight: 400;
+        letter-spacing: 0.06em;
+        color: var(--parchment);
+        margin-bottom: 0.8rem;
+      }
+
+      .lastfm-card p {
+        font-family: "Spectral", serif;
+        font-size: 0.92rem;
+        font-weight: 300;
+        color: var(--text-body);
+        line-height: 1.7;
+        margin-bottom: 1.8rem;
+      }
+
+      .card-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 0.88rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 0.7rem 1.6rem;
+        border: 1px solid;
+        transition: all 0.4s ease;
+        color: #d51007;
+        border-color: rgba(213, 16, 7, 0.25);
+      }
+
+      .card-link:hover {
+        background: rgba(213, 16, 7, 0.08);
+        border-color: rgba(213, 16, 7, 0.5);
+      }
+
+      .card-link svg {
+        width: 16px;
+        height: 16px;
+        transition: transform 0.3s ease;
+      }
+      .card-link:hover svg {
+        transform: translateX(3px);
+      }
+
+      /* ── RECENT TRACKS ── */
+      .recent-section {
+        animation: fadeIn 1s ease both;
+        animation-delay: 0.5s;
+      }
+
+      .recent-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+      }
+
+      .recent-header h3 {
+        font-family: "Cinzel Decorative", serif;
+        font-size: 1.1rem;
+        font-weight: 400;
+        letter-spacing: 0.08em;
+        color: var(--parchment);
+        margin-bottom: 0.6rem;
+      }
+
+      .live-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: "Spectral", serif;
+        font-size: 0.78rem;
+        font-weight: 300;
+        font-style: italic;
+        color: var(--text-dim);
+      }
+
+      .live-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--crimson-glow);
+        animation: pulse 2s ease infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.4;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1.3);
+        }
+      }
+
+      .tracklist {
+        list-style: none;
+        max-width: 650px;
+        margin: 0 auto;
+      }
+
+      .tracklist li {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 0.5rem;
+        border-bottom: 1px solid rgba(196, 185, 168, 0.04);
+        transition: background 0.3s ease;
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      .tracklist li.loaded {
+        opacity: 1;
+        transform: translateY(0);
+        transition:
+          opacity 0.5s ease,
+          transform 0.5s ease,
+          background 0.3s ease;
+      }
+
+      .tracklist li:hover {
+        background: rgba(196, 185, 168, 0.03);
+      }
+
+      .track-num {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 0.75rem;
+        font-weight: 300;
+        color: var(--crimson);
+        min-width: 22px;
+        letter-spacing: 0.05em;
+      }
+
+      .track-art {
+        width: 44px;
+        height: 44px;
+        border-radius: 1px;
+        object-fit: cover;
+        opacity: 0.85;
+        flex-shrink: 0;
+        background: var(--ash);
+      }
+
+      .track-info {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .track-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1rem;
+        font-weight: 400;
+        color: var(--bone);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .track-artist {
+        font-family: "Spectral", serif;
+        font-size: 0.82rem;
+        font-weight: 300;
+        font-style: italic;
+        color: var(--text-dim);
+        margin-top: 0.15rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .track-meta {
+        font-family: "Spectral", serif;
+        font-size: 0.72rem;
+        font-weight: 300;
+        color: var(--text-dim);
+        text-align: right;
+        flex-shrink: 0;
+        min-width: 80px;
+      }
+
+      .track-meta .now-playing {
+        color: var(--crimson-glow);
+        font-style: italic;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.35rem;
+      }
+
+      .track-link {
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+      }
+
+      .loading-state {
+        text-align: center;
+        padding: 3rem 0;
+      }
+
+      .loading-spinner {
+        width: 24px;
+        height: 24px;
+        border: 1px solid rgba(196, 185, 168, 0.1);
+        border-top-color: var(--crimson);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 1rem;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .loading-state p,
+      .error-state p {
+        font-family: "Spectral", serif;
+        font-size: 0.85rem;
+        font-weight: 300;
+        font-style: italic;
+        color: var(--text-dim);
+        line-height: 1.7;
+      }
+
+      .error-state {
+        text-align: center;
+        padding: 2rem 0;
+      }
+
+      .refresh-btn {
+        display: inline-block;
+        margin-top: 1rem;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 0.82rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--crimson-glow);
+        border: 1px solid rgba(139, 26, 26, 0.3);
+        background: none;
+        padding: 0.5rem 1.4rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .refresh-btn:hover {
+        background: rgba(139, 26, 26, 0.08);
+        border-color: rgba(139, 26, 26, 0.5);
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        padding: 2rem;
+        border-top: 1px solid rgba(196, 185, 168, 0.06);
+      }
+
+      footer p {
+        font-family: "Spectral", serif;
+        font-size: 0.78rem;
+        font-weight: 300;
+        font-style: italic;
+        color: var(--text-dim);
+        letter-spacing: 0.04em;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1 id="main-title">O Subterfúgio</h1>
+      <nav>
+        <a href="index.html">Início</a>
+        <a href="escritores.html">Escritores</a>
+        <a href="donereads.html">Leituras</a>
+        <a href="contos.html">Contos</a>
+        <a href="contato.html">Contato</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="galeria.html">Dark Art</a>
+        <a href="tracks.html" aria-current="page">Tracks</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero-section">
+        <h2>O Som do Subterfúgio</h2>
+        <div class="divider"></div>
+        <p class="subtitle">
+          As bandas sonoras que inspiram este diário literário e as profundezas
+          da escrita.
+        </p>
+      </section>
+
+      <div class="lastfm-card">
+        <span class="card-icon">◉</span>
+        <h3>Last.fm</h3>
+        <p>
+          Acompanha o que estou a ouvir em tempo real. Um registo contínuo de
+          escutas — o rastro sonoro que precede e sucede cada leitura.
+        </p>
+        <a
+          href="https://www.last.fm/pt/user/hellborn333"
+          target="_blank"
+          rel="noopener"
+          class="card-link"
+        >
+          Ver Perfil
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M7 17l9.2-9.2M17 17V7H7" />
+          </svg>
+        </a>
+      </div>
+
+      <section class="recent-section">
+        <div class="recent-header">
+          <h3>Faixas Recentes</h3>
+          <span class="live-badge">
+            <span class="live-dot"></span>
+            via Last.fm
+          </span>
+        </div>
+        <div id="tracklist-container">
+          <div class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>Carregagando As Lapadas...</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 — Diário de Leituras | Fausto Pantagruel</p>
+    </footer>
+
+    <script>
+      var LASTFM_API_KEY = "01993057ac6c192d53527f9a6729b45c";
+      var LASTFM_USER = "hellborn333";
+      var TRACK_LIMIT = 12;
+
+      function fetchRecentTracks() {
+        var container = document.getElementById("tracklist-container");
+
+        var url =
+          "https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks" +
+          "&user=" +
+          encodeURIComponent(LASTFM_USER) +
+          "&api_key=" +
+          LASTFM_API_KEY +
+          "&format=json" +
+          "&limit=" +
+          TRACK_LIMIT;
+
+        fetch(url)
+          .then(function (response) {
+            if (!response.ok) throw new Error("Erro na resposta da API");
+            return response.json();
+          })
+          .then(function (data) {
+            if (data.error)
+              throw new Error(data.message || "Erro da API Last.fm");
+
+            var tracks = data.recenttracks && data.recenttracks.track;
+            if (!tracks || tracks.length === 0) {
+              container.innerHTML =
+                '<div class="error-state"><p>Nenhuma faixa recente encontrada.</p></div>';
+              return;
+            }
+            renderTracks(tracks, container);
+          })
+          .catch(function (err) {
+            console.error("Last.fm fetch error:", err);
+            container.innerHTML =
+              '<div class="error-state">' +
+              "<p>Não foi possível carregar as faixas recentes.<br>" +
+              "Verifica a ligação ou tenta novamente.</p>" +
+              '<button class="refresh-btn" onclick="fetchRecentTracks()">Tentar novamente</button>' +
+              "</div>";
+          });
+      }
+
+      function renderTracks(tracks, container) {
+        var html = '<ul class="tracklist">';
+
+        for (var i = 0; i < tracks.length; i++) {
+          var track = tracks[i];
+          var isNowPlaying =
+            track["@attr"] && track["@attr"].nowplaying === "true";
+          var artist =
+            (track.artist && (track.artist["#text"] || track.artist.name)) ||
+            "Desconhecido";
+          var title = track.name || "Sem título";
+          var trackUrl = track.url || "#";
+          var album = (track.album && track.album["#text"]) || "";
+
+          var images = track.image || [];
+          var albumArt = "";
+          for (var j = 0; j < images.length; j++) {
+            if (images[j].size === "medium" && images[j]["#text"]) {
+              albumArt = images[j]["#text"];
+              break;
+            }
+          }
+          if (!albumArt) {
+            for (var k = 0; k < images.length; k++) {
+              if (images[k]["#text"]) {
+                albumArt = images[k]["#text"];
+                break;
+              }
+            }
+          }
+
+          var timeDisplay = "";
+          if (isNowPlaying) {
+            timeDisplay =
+              '<span class="now-playing"><span class="live-dot"></span> a ouvir agora</span>';
+          } else if (track.date && track.date.uts) {
+            timeDisplay = formatTimeAgo(track.date.uts);
+          }
+
+          var num = String(i + 1).padStart(2, "0");
+
+          html +=
+            "<li>" +
+            '<a href="' +
+            escapeHtml(trackUrl) +
+            '" target="_blank" rel="noopener" class="track-link">' +
+            '<span class="track-num">' +
+            num +
+            "</span>" +
+            (albumArt
+              ? '<img src="' +
+                escapeHtml(albumArt) +
+                '" alt="" class="track-art" loading="lazy">'
+              : '<div class="track-art"></div>') +
+            '<div class="track-info">' +
+            '<div class="track-title">' +
+            escapeHtml(title) +
+            "</div>" +
+            '<div class="track-artist">' +
+            escapeHtml(artist) +
+            (album ? " — " + escapeHtml(album) : "") +
+            "</div>" +
+            "</div>" +
+            '<div class="track-meta">' +
+            timeDisplay +
+            "</div>" +
+            "</a></li>";
+        }
+
+        html += "</ul>";
+        container.innerHTML = html;
+
+        var items = container.querySelectorAll(".tracklist li");
+        for (var m = 0; m < items.length; m++) {
+          (function (el, delay) {
+            setTimeout(function () {
+              el.classList.add("loaded");
+            }, delay);
+          })(items[m], 80 * m);
+        }
+      }
+
+      function formatTimeAgo(uts) {
+        var now = Math.floor(Date.now() / 1000);
+        var diff = now - parseInt(uts, 10);
+        if (diff < 60) return "agora mesmo";
+        if (diff < 3600) return Math.floor(diff / 60) + " min";
+        if (diff < 86400) return Math.floor(diff / 3600) + "h";
+        if (diff < 604800) return Math.floor(diff / 86400) + "d";
+        var d = new Date(parseInt(uts, 10) * 1000);
+        return d.toLocaleDateString("pt-PT", {
+          day: "numeric",
+          month: "short",
+        });
+      }
+
+      function escapeHtml(str) {
+        var div = document.createElement("div");
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      fetchRecentTracks();
+      setInterval(fetchRecentTracks, 120000);
+    </script>
+  </body>
+</html>

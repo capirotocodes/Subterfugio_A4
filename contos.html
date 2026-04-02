@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="pt-pt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meus Contos - O Subterfúgio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Spectral:ital,wght@0,300;0,400;1,300&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --ink: #0a0a0b;
+        --parchment: #e8e0d4;
+        --crimson: #8b1a1a;
+        --crimson-glow: #a52222;
+        --bone: #d4ccc0;
+        --ash: #2a2a2e;
+        --text-dim: #6b6560;
+        --text-body: #9e958a;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: var(--ink);
+        color: var(--parchment);
+        font-family: "Cormorant Garamond", "Georgia", serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 80% 60% at 20% 10%,
+            rgba(139, 26, 26, 0.04) 0%,
+            transparent 70%
+          ),
+          radial-gradient(
+            ellipse 60% 80% at 80% 90%,
+            rgba(139, 26, 26, 0.03) 0%,
+            transparent 70%
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        opacity: 0.035;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 9999;
+      }
+
+      /* ── HEADER ── */
+      header {
+        position: relative;
+        z-index: 10;
+        padding: 2rem 2rem 1.5rem;
+        border-bottom: 1px solid rgba(196, 185, 168, 0.08);
+      }
+
+      #main-title {
+        font-family: "Cinzel Decorative", "Georgia", serif;
+        font-size: clamp(1.4rem, 3vw, 1.8rem);
+        font-weight: 400;
+        letter-spacing: 0.15em;
+        color: var(--parchment);
+        text-align: center;
+        margin-bottom: 1.2rem;
+      }
+
+      nav {
+        display: flex;
+        justify-content: center;
+        gap: 0.2rem;
+        flex-wrap: wrap;
+      }
+
+      nav a {
+        font-family: "Spectral", serif;
+        font-size: 0.82rem;
+        font-weight: 300;
+        font-style: italic;
+        color: var(--text-dim);
+        text-decoration: none;
+        padding: 0.4rem 0.9rem;
+        letter-spacing: 0.04em;
+        transition: color 0.4s ease;
+        position: relative;
+      }
+
+      nav a::after {
+        content: "";
+        position: absolute;
+        bottom: 2px;
+        left: 50%;
+        width: 0;
+        height: 1px;
+        background: var(--crimson);
+        transition: all 0.4s ease;
+        transform: translateX(-50%);
+      }
+
+      nav a:hover {
+        color: var(--parchment);
+      }
+      nav a:hover::after {
+        width: 60%;
+      }
+      nav a[aria-current="page"] {
+        color: var(--crimson-glow);
+      }
+      nav a[aria-current="page"]::after {
+        width: 60%;
+        background: var(--crimson);
+      }
+
+      /* ── MAIN ── */
+      main {
+        position: relative;
+        z-index: 1;
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 4rem 2rem 6rem;
+      }
+
+      .hero-section {
+        text-align: center;
+        margin-bottom: 4rem;
+        animation: fadeIn 1.2s ease both;
+      }
+
+      .hero-section h2 {
+        font-family: "Cinzel Decorative", serif;
+        font-size: clamp(1.4rem, 4vw, 2.4rem);
+        font-weight: 400;
+        letter-spacing: 0.08em;
+        color: var(--parchment);
+        margin-bottom: 1rem;
+      }
+
+      .divider {
+        width: 60px;
+        height: 1px;
+        background: var(--crimson);
+        margin: 2.5rem auto;
+        opacity: 0.6;
+      }
+
+      /* ── CONTO CARD ── */
+      .conto-card {
+        background: linear-gradient(
+          160deg,
+          rgba(42, 42, 46, 0.5) 0%,
+          rgba(26, 26, 28, 0.8) 100%
+        );
+        border: 1px solid rgba(196, 185, 168, 0.06);
+        border-radius: 2px;
+        padding: 2.5rem 2.2rem;
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 2.5rem;
+        animation: slideUp 0.8s ease both;
+        animation-delay: 0.3s;
+      }
+
+      .conto-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--crimson),
+          transparent
+        );
+        opacity: 0.4;
+      }
+
+      .conto-header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        margin-bottom: 2rem;
+        padding-bottom: 1.2rem;
+        border-bottom: 1px solid rgba(196, 185, 168, 0.05);
+      }
+
+      .conto-titulo {
+        font-family: "Cinzel Decorative", serif;
+        font-size: 1.3rem;
+        font-weight: 400;
+        letter-spacing: 0.06em;
+        color: var(--parchment);
+      }
+
+      .conto-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+      }
+
+      .selo {
+        font-family: "Spectral", serif;
+        font-size: 0.65rem;
+        font-weight: 300;
+        font-style: italic;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--crimson-glow);
+        border: 1px solid rgba(139, 26, 26, 0.25);
+        padding: 0.3rem 0.8rem;
+      }
+
+      .conto-data {
+        font-family: "Spectral", serif;
+        font-size: 0.78rem;
+        font-weight: 300;
+        font-style: italic;
+        color: var(--text-dim);
+      }
+
+      /* ── PROSE ── */
+      .conto-corpo p {
+        font-family: "Spectral", serif;
+        font-size: 1.05rem;
+        font-weight: 300;
+        color: var(--text-body);
+        line-height: 1.9;
+        margin-bottom: 1.2rem;
+        text-indent: 1.5em;
+      }
+
+      .conto-corpo p:first-child {
+        text-indent: 0;
+      }
+
+      .conto-corpo p:first-child::first-letter {
+        font-family: "Cinzel Decorative", serif;
+        font-size: 2.8rem;
+        font-weight: 700;
+        float: left;
+        line-height: 0.85;
+        margin-right: 0.12em;
+        margin-top: 0.08em;
+        color: var(--crimson-glow);
+      }
+
+      .conto-corpo p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* Dialogue styling */
+      .conto-corpo .dialogo {
+        text-indent: 0;
+        padding-left: 1.2rem;
+        border-left: 1px solid rgba(139, 26, 26, 0.2);
+        color: var(--bone);
+        font-style: italic;
+      }
+
+      /* ── CTA LINK ── */
+      .cta-section {
+        text-align: center;
+        animation: fadeIn 1s ease both;
+        animation-delay: 0.6s;
+      }
+
+      .cta-label {
+        font-family: "Spectral", serif;
+        font-size: 0.92rem;
+        font-weight: 300;
+        font-style: italic;
+        color: var(--text-dim);
+        margin-bottom: 1.2rem;
+        line-height: 1.7;
+      }
+
+      .hero-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 0.88rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: var(--crimson-glow);
+        border: 1px solid rgba(139, 26, 26, 0.3);
+        padding: 0.75rem 1.8rem;
+        transition: all 0.4s ease;
+      }
+
+      .hero-cta:hover {
+        background: rgba(139, 26, 26, 0.08);
+        border-color: rgba(139, 26, 26, 0.5);
+        color: var(--parchment);
+      }
+
+      .hero-cta svg {
+        width: 14px;
+        height: 14px;
+        transition: transform 0.3s ease;
+      }
+
+      .hero-cta:hover svg {
+        transform: translateX(3px);
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        padding: 2rem;
+        border-top: 1px solid rgba(196, 185, 168, 0.06);
+      }
+
+      footer p {
+        font-family: "Spectral", serif;
+        font-size: 0.78rem;
+        font-weight: 300;
+        font-style: italic;
+        color: var(--text-dim);
+        letter-spacing: 0.04em;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1 id="main-title">O Subterfúgio</h1>
+      <nav>
+        <a href="index.html">Início</a>
+        <a href="escritores.html">Escritores</a>
+        <a href="donereads.html">Leituras</a>
+        <a href="contos.html" aria-current="page">Contos</a>
+        <a href="contato.html">Contato</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="galeria.html">Dark Art</a>
+        <a href="tracks.html">Tracks</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero-section">
+        <h2>Meus Contos e Escritos</h2>
+        <div class="divider"></div>
+      </section>
+
+      <article class="conto-card">
+        <div class="conto-header">
+          <h3 class="conto-titulo">Bombardo</h3>
+          <div class="conto-meta">
+            <span class="selo">Obra Original</span>
+            <span class="conto-data">18 de Fevereiro de 2026</span>
+          </div>
+        </div>
+
+        <div class="conto-corpo">
+          <p>
+            A sineta da porta tilintou quando Bombardo adentrou a Agropecuária
+            São Leopoldo Mandioca. O assoalho rangeu sob o peso de seus passos e
+            de seus vastos quadríceps.
+          </p>
+          <p>
+            Ele retirou o chapéu com solenidade teatral e, apoiando ambas as
+            mãos colossais sobre o balcão, declarou:
+          </p>
+          <p class="dialogo">
+            — Boa tarde, nobre guardião das rações e das rédeas. Necessito um
+            balsamo para meu equino que encontra-se claudicante, praticamente se
+            enveredando nas searas no além.
+          </p>
+        </div>
+      </article>
+
+      <section class="cta-section">
+        <p class="cta-label">
+          Mais textos e escritos originais no meu espaço pessoal.
+        </p>
+        <a
+          href="https://atlanteancurrent.com/"
+          target="_blank"
+          rel="noopener"
+          class="hero-cta"
+        >
+          Atlantean Current
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M7 17l9.2-9.2M17 17V7H7" />
+          </svg>
+        </a>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2026 — Diário de Leituras | Fausto Pantagruel</p>
+    </footer>
+  </body>
+</html>
