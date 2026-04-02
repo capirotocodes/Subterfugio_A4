@@ -1,341 +1,371 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-pt">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre - O Subterfúgio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Spectral:ital,wght@0,300;0,400;1,300&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Spectral:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
     <style>
-      *,
-      *::before,
-      *::after {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      :root {
-        --ink: #0a0a0b;
-        --parchment: #e8e0d4;
-        --crimson: #8b1a1a;
-        --crimson-glow: #a52222;
-        --bone: #d4ccc0;
-        --ash: #2a2a2e;
-        --text-dim: #6b6560;
-        --text-body: #9e958a;
-      }
-
-      html {
-        scroll-behavior: smooth;
-      }
-
-      body {
-        background-color: var(--ink);
-        color: var(--parchment);
-        font-family: "Cormorant Garamond", "Georgia", serif;
-        min-height: 100vh;
-        overflow-x: hidden;
-        position: relative;
-      }
-
-      body::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        background:
-          radial-gradient(
-            ellipse 80% 60% at 20% 10%,
-            rgba(139, 26, 26, 0.04) 0%,
-            transparent 70%
-          ),
-          radial-gradient(
-            ellipse 60% 80% at 80% 90%,
-            rgba(139, 26, 26, 0.03) 0%,
-            transparent 70%
-          );
-        pointer-events: none;
-        z-index: 0;
-      }
-
-      body::after {
-        content: "";
-        position: fixed;
-        inset: 0;
-        opacity: 0.035;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-        pointer-events: none;
-        z-index: 9999;
-      }
-
-      /* ── HEADER ── */
-      header {
-        position: relative;
-        z-index: 10;
-        padding: 2rem 2rem 1.5rem;
-        border-bottom: 1px solid rgba(196, 185, 168, 0.08);
-      }
-
-      #main-title {
-        font-family: "Cinzel Decorative", "Georgia", serif;
-        font-size: clamp(1.4rem, 3vw, 1.8rem);
-        font-weight: 400;
-        letter-spacing: 0.15em;
-        color: var(--parchment);
-        text-align: center;
-        margin-bottom: 1.2rem;
-      }
-
-      nav {
-        display: flex;
-        justify-content: center;
-        gap: 0.2rem;
-        flex-wrap: wrap;
-      }
-
-      nav a {
-        font-family: "Spectral", serif;
-        font-size: 0.82rem;
-        font-weight: 300;
-        font-style: italic;
-        color: var(--text-dim);
-        text-decoration: none;
-        padding: 0.4rem 0.9rem;
-        letter-spacing: 0.04em;
-        transition: color 0.4s ease;
-        position: relative;
-      }
-
-      nav a::after {
-        content: "";
-        position: absolute;
-        bottom: 2px;
-        left: 50%;
-        width: 0;
-        height: 1px;
-        background: var(--crimson);
-        transition: all 0.4s ease;
-        transform: translateX(-50%);
-      }
-
-      nav a:hover {
-        color: var(--parchment);
-      }
-      nav a:hover::after {
-        width: 60%;
-      }
-      nav a[aria-current="page"] {
-        color: var(--crimson-glow);
-      }
-      nav a[aria-current="page"]::after {
-        width: 60%;
-        background: var(--crimson);
-      }
-
-      /* ── MAIN ── */
-      main {
-        position: relative;
-        z-index: 1;
-        max-width: 720px;
-        margin: 0 auto;
-        padding: 4rem 2rem 6rem;
-      }
-
-      .hero-section {
-        text-align: center;
-        margin-bottom: 4rem;
-        animation: fadeIn 1.2s ease both;
-      }
-
-      .hero-section h2 {
-        font-family: "Cinzel Decorative", serif;
-        font-size: clamp(1.6rem, 4.5vw, 2.8rem);
-        font-weight: 400;
-        letter-spacing: 0.08em;
-        color: var(--parchment);
-        margin-bottom: 1rem;
-      }
-
-      .divider {
-        width: 60px;
-        height: 1px;
-        background: var(--crimson);
-        margin: 2.5rem auto;
-        opacity: 0.6;
-      }
-
-      /* ── BADGE ── */
-      .selo {
-        font-family: "Spectral", serif;
-        font-size: 0.7rem;
-        font-weight: 300;
-        font-style: italic;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-        color: var(--crimson-glow);
-        border: 1px solid rgba(139, 26, 26, 0.25);
-        padding: 0.35rem 1rem;
-        display: inline-block;
-        margin: 0 auto 3rem;
-        text-align: center;
-        animation: fadeIn 1s ease both;
-        animation-delay: 0.3s;
-      }
-
-      /* ── ARTICLE PROSE ── */
-      .texto-sobre {
-        animation: slideUp 0.8s ease both;
-        animation-delay: 0.4s;
-      }
-
-      .texto-sobre p {
-        font-family: "Spectral", serif;
-        font-size: 1.05rem;
-        font-weight: 300;
-        color: var(--text-body);
-        line-height: 1.9;
-        margin-bottom: 1.6rem;
-      }
-
-      .texto-sobre p:last-child {
-        margin-bottom: 0;
-      }
-
-      .texto-sobre strong {
-        font-family: "Cormorant Garamond", serif;
-        font-weight: 600;
-        color: var(--bone);
-        letter-spacing: 0.02em;
-      }
-
-      /* ── Decorative pull-quote ── */
-      .pull-quote {
-        position: relative;
-        margin: 2.5rem 0;
-        padding: 1.8rem 0 1.8rem 1.8rem;
-        border-left: 1px solid rgba(139, 26, 26, 0.3);
-        animation: slideUp 0.8s ease both;
-        animation-delay: 0.6s;
-      }
-
-      .pull-quote p {
-        font-family: "Cormorant Garamond", serif;
-        font-size: 1.2rem;
-        font-weight: 300;
-        font-style: italic;
-        color: var(--bone);
-        line-height: 1.7;
-        margin-bottom: 0;
-      }
-
-      .pull-quote cite {
-        display: block;
-        margin-top: 0.8rem;
-        font-family: "Spectral", serif;
-        font-size: 0.8rem;
-        font-weight: 300;
-        font-style: italic;
-        color: var(--text-dim);
-      }
-
-      /* ── FOOTER ── */
-      footer {
-        position: relative;
-        z-index: 10;
-        text-align: center;
-        padding: 2rem;
-        border-top: 1px solid rgba(196, 185, 168, 0.06);
-      }
-
-      footer p {
-        font-family: "Spectral", serif;
-        font-size: 0.78rem;
-        font-weight: 300;
-        font-style: italic;
-        color: var(--text-dim);
-        letter-spacing: 0.04em;
-      }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        to {
-          opacity: 1;
+
+        :root {
+            --ink: #0a0a0b;
+            --parchment: #e8e0d4;
+            --crimson: #8b1a1a;
+            --crimson-glow: #a52222;
+            --bone: #d4ccc0;
+            --ash: #2a2a2e;
+            --text-dim: #6b6560;
+            --text-body: #9e958a;
         }
-      }
-      @keyframes slideUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--ink);
+            color: var(--parchment);
+            font-family: 'Cormorant Garamond', 'Georgia', serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
         }
-        to {
-          opacity: 1;
-          transform: translateY(0);
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 20% 10%, rgba(139, 26, 26, 0.04) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 80% at 80% 90%, rgba(139, 26, 26, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
         }
-      }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            opacity: 0.035;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* ── HEADER ── */
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 2rem 2rem 1.5rem;
+            border-bottom: 1px solid rgba(196, 185, 168, 0.08);
+        }
+
+        #main-title {
+            font-family: 'Cinzel Decorative', 'Georgia', serif;
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            color: var(--parchment);
+            text-align: center;
+            margin-bottom: 1.2rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 0.2rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            font-family: 'Spectral', serif;
+            font-size: 0.82rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-dim);
+            text-decoration: none;
+            padding: 0.4rem 0.9rem;
+            letter-spacing: 0.04em;
+            transition: color 0.4s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background: var(--crimson);
+            transition: all 0.4s ease;
+            transform: translateX(-50%);
+        }
+
+        nav a:hover { color: var(--parchment); }
+        nav a:hover::after { width: 60%; }
+        nav a[aria-current="page"] { color: var(--crimson-glow); }
+        nav a[aria-current="page"]::after { width: 60%; background: var(--crimson); }
+
+        /* ── MAIN ── */
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 4rem 2rem 6rem;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeIn 1.2s ease both;
+        }
+
+        .hero-section h2 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: clamp(1.6rem, 4.5vw, 2.8rem);
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            color: var(--parchment);
+            margin-bottom: 1rem;
+        }
+
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: var(--crimson);
+            margin: 2.5rem auto;
+            opacity: 0.6;
+        }
+
+        /* ── BADGE ── */
+        .selo {
+            font-family: 'Spectral', serif;
+            font-size: 0.7rem;
+            font-weight: 300;
+            font-style: italic;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--crimson-glow);
+            border: 1px solid rgba(139, 26, 26, 0.25);
+            padding: 0.35rem 1rem;
+            display: inline-block;
+            margin: 0 auto 3rem;
+            text-align: center;
+            animation: fadeIn 1s ease both;
+            animation-delay: 0.3s;
+        }
+
+        /* ── ARTICLE PROSE ── */
+        .texto-sobre {
+            animation: slideUp 0.8s ease both;
+            animation-delay: 0.4s;
+        }
+
+        .texto-sobre p {
+            font-family: 'Spectral', serif;
+            font-size: 1.05rem;
+            font-weight: 300;
+            color: var(--text-body);
+            line-height: 1.9;
+            margin-bottom: 1.6rem;
+        }
+
+        .texto-sobre p:last-child {
+            margin-bottom: 0;
+        }
+
+        .texto-sobre strong {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            color: var(--bone);
+            letter-spacing: 0.02em;
+        }
+
+        /* ── Decorative pull-quote ── */
+        .pull-quote {
+            position: relative;
+            margin: 2.5rem 0;
+            padding: 1.8rem 0 1.8rem 1.8rem;
+            border-left: 1px solid rgba(139, 26, 26, 0.3);
+            animation: slideUp 0.8s ease both;
+            animation-delay: 0.6s;
+        }
+
+        .pull-quote p {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--bone);
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+
+        /* ── SKOOB CTA ── */
+        .skoob-section {
+            text-align: center;
+            margin-top: 3.5rem;
+            padding-top: 2.5rem;
+            border-top: 1px solid rgba(196, 185, 168, 0.05);
+            animation: fadeIn 1s ease both;
+            animation-delay: 0.8s;
+        }
+
+        .skoob-label {
+            font-family: 'Spectral', serif;
+            font-size: 0.92rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-dim);
+            margin-bottom: 1.2rem;
+            line-height: 1.7;
+        }
+
+        .skoob-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #3a9ad9;
+            border: 1px solid rgba(58, 154, 217, 0.25);
+            padding: 0.75rem 1.8rem;
+            transition: all 0.4s ease;
+        }
+
+        .skoob-link:hover {
+            background: rgba(58, 154, 217, 0.08);
+            border-color: rgba(58, 154, 217, 0.5);
+            color: var(--parchment);
+        }
+
+        .skoob-link svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        .skoob-link .skoob-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .skoob-link:hover .skoob-icon {
+            transform: scale(1.1);
+        }
+
+        .skoob-link .arrow-icon {
+            width: 14px;
+            height: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .skoob-link:hover .arrow-icon {
+            transform: translateX(3px);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(196, 185, 168, 0.06);
+        }
+
+        footer p {
+            font-family: 'Spectral', serif;
+            font-size: 0.78rem;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-dim);
+            letter-spacing: 0.04em;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
-  </head>
-  <body>
+</head>
+<body>
+
     <header>
-      <h1 id="main-title">O Subterfúgio</h1>
-      <nav>
-        <a href="index.html">Início</a>
-        <a href="escritores.html">Escritores</a>
-        <a href="donereads.html">Leituras</a>
-        <a href="contos.html">Contos</a>
-        <a href="contato.html">Contato</a>
-        <a href="sobre.html" aria-current="page">Sobre</a>
-        <a href="galeria.html">Dark Art</a>
-        <a href="tracks.html">Tracks</a>
-      </nav>
+        <h1 id="main-title">O Subterfúgio</h1>
+        <nav>
+            <a href="index.html">Início</a>
+            <a href="escritores.html">Escritores</a>
+            <a href="donereads.html">Leituras</a>
+            <a href="contos.html">Contos</a>
+            <a href="contato.html">Contato</a>
+            <a href="sobre.html" aria-current="page">Sobre</a>
+            <a href="galeria.html">Dark Art</a>
+            <a href="tracks.html">Tracks</a>
+        </nav>
     </header>
 
     <main>
-      <section class="hero-section">
-        <h2>Sobre</h2>
-        <div class="divider"></div>
-      </section>
+        <section class="hero-section">
+            <h2>Sobre</h2>
+            <div class="divider"></div>
+        </section>
 
-      <div style="text-align: center">
-        <span class="selo">O Projeto</span>
-      </div>
-
-      <article class="texto-sobre">
-        <p>
-          <strong>O Subterfúgio</strong> é um portal dedicado à literatura
-          clássica e contemporânea, focado em autores que exploram as
-          profundezas da condição humana e as sombras da sociedade.
-        </p>
-        <p>
-          Este site foi desenvolvido como parte de um projeto acadêmico para
-          praticar as propriedades de posicionamento e estilização com CSS,
-          unindo a paixão pelos livros com o aprendizado técnico de programação
-          web em 2026.
-        </p>
-
-        <div class="pull-quote">
-          <p>
-            Do realismo russo às distopias modernas, cada página aqui reflete um
-            capítulo diferente da nossa jornada literária.
-          </p>
+        <div style="text-align: center;">
+            <span class="selo">O Projeto</span>
         </div>
 
-        <p>
-          Acompanhada de artes sombrias e trilhas sonoras que compõem a
-          atmosfera ideal para o pensamento crítico, esta é uma experiência
-          construída para quem encontra nas palavras um refúgio — e no silêncio
-          entre elas, um subterfúgio.
-        </p>
-      </article>
+        <article class="texto-sobre">
+            <p>
+                <strong>O Subterfúgio</strong> é um portal dedicado à literatura
+                clássica e contemporânea, focado em autores que exploram as
+                profundezas da condição humana e as sombras da sociedade.
+            </p>
+            <p>
+                Este site foi desenvolvido como parte de um projeto acadêmico para
+                praticar as propriedades de posicionamento e estilização com CSS,
+                unindo a paixão pelos livros com o aprendizado técnico de programação
+                web em 2026.
+            </p>
+
+            <div class="pull-quote">
+                <p>Do realismo russo às distopias modernas, cada página aqui reflete um
+                capítulo diferente da nossa jornada literária.</p>
+            </div>
+
+            <p>
+                Acompanhada de artes sombrias e trilhas sonoras que compõem
+                a atmosfera ideal para o pensamento crítico, esta é uma experiência
+                construída para quem encontra nas palavras um refúgio — e no silêncio
+                entre elas, um subterfúgio.
+            </p>
+        </article>
+
+        <section class="skoob-section">
+            <p class="skoob-label">Acompanha as minhas leituras e estante virtual no Skoob.</p>
+            <a href="https://skoob.com.br/profile/10609993-chaostream" target="_blank" rel="noopener" class="skoob-link">
+                <svg class="skoob-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1.5 5.5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5S9 9.83 9 9s.67-1.5 1.5-1.5zm3 0c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5S12 9.83 12 9s.67-1.5 1.5-1.5zM12 18c-2.21 0-4-1.34-4-3h1.5c0 .83 1.12 1.5 2.5 1.5s2.5-.67 2.5-1.5H16c0 1.66-1.79 3-4 3z"/>
+                </svg>
+                Perfil no Skoob
+                <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+            </a>
+        </section>
     </main>
 
     <footer>
-      <p>&copy; 2026 — Diário de Leituras | Fausto Pantagruel</p>
+        <p>&copy; 2026 — Diário de Leituras | Fausto Pantagruel</p>
     </footer>
-  </body>
+
+</body>
 </html>
