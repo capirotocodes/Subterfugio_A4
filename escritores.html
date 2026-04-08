@@ -1,9 +1,10 @@
 <!doctype html>
-<html lang="pt-pt">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Escritores - O Subterfúgio</title>
+    <meta name="description" content="Biografias em destaque — os autores que habitam as páginas deste diário de leituras." />
+    <title>Escritores — O Subterfúgio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -74,6 +75,26 @@
         z-index: 9999;
       }
 
+      /* ── SKIP LINK ── */
+      .skip-link {
+        position: absolute;
+        top: -100%;
+        left: 1rem;
+        background: var(--crimson);
+        color: var(--parchment);
+        padding: 0.6rem 1.2rem;
+        font-family: "Spectral", serif;
+        font-size: 0.85rem;
+        text-decoration: none;
+        z-index: 1000;
+        border-radius: 0 0 2px 2px;
+        transition: top 0.2s ease;
+      }
+
+      .skip-link:focus {
+        top: 0;
+      }
+
       /* ── HEADER ── */
       header {
         position: relative;
@@ -90,6 +111,11 @@
         color: var(--parchment);
         text-align: center;
         margin-bottom: 1.2rem;
+      }
+
+      #main-title a {
+        color: inherit;
+        text-decoration: none;
       }
 
       nav {
@@ -124,15 +150,20 @@
         transform: translateX(-50%);
       }
 
-      nav a:hover {
+      nav a:hover,
+      nav a:focus-visible {
         color: var(--parchment);
       }
-      nav a:hover::after {
+
+      nav a:hover::after,
+      nav a:focus-visible::after {
         width: 60%;
       }
+
       nav a[aria-current="page"] {
         color: var(--crimson-glow);
       }
+
       nav a[aria-current="page"]::after {
         width: 60%;
         background: var(--crimson);
@@ -238,12 +269,14 @@
         z-index: 2;
       }
 
-      .writer-card:hover {
+      .writer-card:hover,
+      .writer-card:focus-within {
         border-color: rgba(196, 185, 168, 0.12);
         transform: translateY(-4px);
       }
 
-      .writer-card:hover::before {
+      .writer-card:hover::before,
+      .writer-card:focus-within::before {
         opacity: 0.5;
       }
 
@@ -323,6 +356,25 @@
         letter-spacing: 0.04em;
       }
 
+      /* ── REDUCED MOTION ── */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
+        }
+
+        html {
+          scroll-behavior: auto;
+        }
+
+        .writer-card {
+          opacity: 1;
+          transform: none;
+        }
+      }
+
       @keyframes fadeIn {
         from {
           opacity: 0;
@@ -334,9 +386,11 @@
     </style>
   </head>
   <body>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
     <header>
-      <h1 id="main-title">O Subterfúgio</h1>
-      <nav>
+      <h1 id="main-title"><a href="index.html">O Subterfúgio</a></h1>
+      <nav aria-label="Navegação principal">
         <a href="index.html">Início</a>
         <a href="escritores.html" aria-current="page">Escritores</a>
         <a href="donereads.html">Leituras</a>
@@ -348,10 +402,10 @@
       </nav>
     </header>
 
-    <main>
+    <main id="conteudo">
       <section class="hero-section">
         <h2>Biografias em Destaque</h2>
-        <div class="divider"></div>
+        <div class="divider" role="presentation"></div>
         <p class="subtitle">Os autores que habitam as páginas deste diário.</p>
       </section>
 
@@ -359,68 +413,70 @@
         <article class="writer-card">
           <div class="writer-portrait">
             <span class="nation-badge">Rússia</span>
-            <img src="Fiodor.jpg" alt="Fiódor Dostoiévski" loading="lazy" />
+            <img src="Fiodor.jpg" alt="Retrato de Fiódor Dostoiévski" loading="lazy" />
           </div>
           <div class="writer-info">
-            <div class="writer-name">Fiódor Dostoiévski</div>
+            <h3 class="writer-name">Fiódor Dostoiévski</h3>
           </div>
         </article>
 
         <article class="writer-card">
           <div class="writer-portrait">
             <span class="nation-badge">Ucrânia</span>
-            <img src="bulgakov.jpg" alt="Mikhail Bulgákov" loading="lazy" />
+            <img src="bulgakov.jpg" alt="Retrato de Mikhail Bulgákov" loading="lazy" />
           </div>
           <div class="writer-info">
-            <div class="writer-name">Mikhail Bulgákov</div>
+            <h3 class="writer-name">Mikhail Bulgákov</h3>
           </div>
         </article>
 
         <article class="writer-card">
           <div class="writer-portrait">
             <span class="nation-badge">Ucrânia</span>
-            <img src="vassili.png" alt="Vassili Grossman" loading="lazy" />
+            <img src="vassili.png" alt="Retrato de Vassili Grossman" loading="lazy" />
           </div>
           <div class="writer-info">
-            <div class="writer-name">Vassili Grossman</div>
+            <h3 class="writer-name">Vassili Grossman</h3>
           </div>
         </article>
 
         <article class="writer-card">
           <div class="writer-portrait">
             <span class="nation-badge">Belarus</span>
-            <img src="Svetlana.png" alt="Svetlana Alexijevich" loading="lazy" />
+            <img src="Svetlana.png" alt="Retrato de Svetlana Alexijevich" loading="lazy" />
           </div>
           <div class="writer-info">
-            <div class="writer-name">Svetlana Alexijevich</div>
+            <h3 class="writer-name">Svetlana Alexijevich</h3>
           </div>
         </article>
 
         <article class="writer-card">
           <div class="writer-portrait">
             <span class="nation-badge">Brasil</span>
-            <img
-              src="Ana_Claudia.jpg"
-              alt="Ana Claudia Quintana Arantes"
-              loading="lazy"
-            />
+            <img src="Ana_Claudia.jpg" alt="Retrato de Ana Claudia Quintana Arantes" loading="lazy" />
           </div>
           <div class="writer-info">
-            <div class="writer-name">Ana Claudia Quintana Arantes</div>
+            <h3 class="writer-name">Ana Claudia Quintana Arantes</h3>
           </div>
         </article>
 
         <article class="writer-card">
           <div class="writer-portrait">
             <span class="nation-badge">Hungria</span>
-            <img
-              src="Krasznahorkai_László_portrait.jpg"
-              alt="László Krasznahorkai"
-              loading="lazy"
-            />
+            <img src="Krasznahorkai_László_portrait.jpg" alt="Retrato de László Krasznahorkai" loading="lazy" />
           </div>
           <div class="writer-info">
-            <div class="writer-name">László Krasznahorkai</div>
+            <h3 class="writer-name">László Krasznahorkai</h3>
+          </div>
+        </article>
+
+        <article class="writer-card">
+          <div class="writer-portrait">
+            <span class="nation-badge">Brasil</span>
+            <img src="marcelo_viana.png" alt="Retrato de Marcelo Viana" loading="lazy" />
+          </div>
+          <div class="writer-info">
+            <h3 class="writer-name">Marcelo Viana</h3>
           </div>
         </article>
       </div>
@@ -431,23 +487,38 @@
     </footer>
 
     <script>
-      var cards = document.querySelectorAll(".writer-card");
+      (function () {
+        "use strict";
 
-      function revealCards() {
-        for (var i = 0; i < cards.length; i++) {
-          var rect = cards[i].getBoundingClientRect();
-          if (rect.top < window.innerHeight - 40) {
-            (function (el, delay) {
-              setTimeout(function () {
-                el.classList.add("visible");
-              }, delay);
-            })(cards[i], i * 120);
-          }
+        var cards = document.querySelectorAll(".writer-card");
+
+        if ("IntersectionObserver" in window) {
+          var observer = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  var card = entry.target;
+                  var index = Array.prototype.indexOf.call(cards, card);
+                  setTimeout(function () {
+                    card.classList.add("visible");
+                  }, index * 120);
+                  observer.unobserve(card);
+                }
+              });
+            },
+            { threshold: 0.1 }
+          );
+
+          cards.forEach(function (card) {
+            observer.observe(card);
+          });
+        } else {
+          /* Fallback: show all cards immediately */
+          cards.forEach(function (card) {
+            card.classList.add("visible");
+          });
         }
-      }
-
-      revealCards();
-      window.addEventListener("scroll", revealCards);
+      })();
     </script>
   </body>
 </html>
