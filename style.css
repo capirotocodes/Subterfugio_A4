@@ -543,3 +543,70 @@ footer p {
         max-height: 60vh;
     }
 }
+
+/* Contos — text too large on small screens */
+    .texto-conto h3 {
+        font-size: 1.3rem;
+    }
+
+    .texto-conto p {
+        font-size: 0.95rem;
+        text-align: left; /* justify looks bad on narrow screens */
+    }
+
+    /* Sobre — same justify issue */
+    .texto-sobre p {
+        font-size: 1rem;
+        text-align: left;
+    }
+
+    /* Contato — form needs breathing room */
+    .form-contato input,
+    .form-contato textarea,
+    .form-contato select {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+
+    .btn-submit {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+
+    /* Galeria — single column for artwork */
+    .galeria-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .obra-moldura {
+        max-width: 100%;
+    }
+
+    /* Section titles — tighter */
+    .section-title {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+    }
+
+    /* Selos/badges — scale down so they don't overflow cards */
+    .selo {
+        font-size: 0.7rem;
+        padding: 5px 10px;
+    }
+
+    .status-label {
+        font-size: 0.7rem;
+        padding: 4px 8px;
+    }
+
+    /* Footer */
+    footer {
+        padding: 20px 15px;
+        margin-top: 30px;
+    }
+
+    footer p {
+        font-size: 0.8rem;
+    }
+}
