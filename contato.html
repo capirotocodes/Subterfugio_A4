@@ -1,499 +1,595 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sugestões - O Subterfúgio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Spectral:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Spectral:ital,wght@0,300;0,400;1,300&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --ink: #0a0a0b;
+        --parchment: #e8e0d4;
+        --crimson: #8b1a1a;
+        --crimson-glow: #a52222;
+        --bone: #d4ccc0;
+        --ash: #2a2a2e;
+        --text-dim: #6b6560;
+        --text-body: #9e958a;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: var(--ink);
+        color: var(--parchment);
+        font-family: "Cormorant Garamond", "Georgia", serif;
+        min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 80% 60% at 20% 10%,
+            rgba(139, 26, 26, 0.04) 0%,
+            transparent 70%
+          ),
+          radial-gradient(
+            ellipse 60% 80% at 80% 90%,
+            rgba(139, 26, 26, 0.03) 0%,
+            transparent 70%
+          );
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        opacity: 0.035;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 9999;
+      }
+
+      /* ── HEADER ── */
+      header {
+        position: relative;
+        z-index: 10;
+        padding: 2rem 2rem 1.5rem;
+        border-bottom: 1px solid rgba(196, 185, 168, 0.08);
+      }
+
+      #main-title {
+        font-family: "Cinzel Decorative", "Georgia", serif;
+        font-size: clamp(1.4rem, 3vw, 1.8rem);
+        font-weight: 400;
+        letter-spacing: 0.15em;
+        color: var(--parchment);
+        text-align: center;
+        margin-bottom: 1.2rem;
+      }
+
+      nav {
+        display: flex;
+        justify-content: center;
+        gap: 0.2rem;
+        flex-wrap: wrap;
+      }
+
+      nav a {
+        font-family: "Spectral", serif;
+        font-size: 0.82rem;
+        font-weight: 300;
+        font-style: italic;
+        color: var(--text-dim);
+        text-decoration: none;
+        padding: 0.4rem 0.9rem;
+        letter-spacing: 0.04em;
+        transition: color 0.4s ease;
+        position: relative;
+      }
+
+      nav a::after {
+        content: "";
+        position: absolute;
+        bottom: 2px;
+        left: 50%;
+        width: 0;
+        height: 1px;
+        background: var(--crimson);
+        transition: all 0.4s ease;
+        transform: translateX(-50%);
+      }
+
+      nav a:hover {
+        color: var(--parchment);
+      }
+      nav a:hover::after {
+        width: 60%;
+      }
+      nav a[aria-current="page"] {
+        color: var(--crimson-glow);
+      }
+      nav a[aria-current="page"]::after {
+        width: 60%;
+        background: var(--crimson);
+      }
+
+      /* ── MAIN ── */
+      main {
+        position: relative;
+        z-index: 1;
+        max-width: 620px;
+        margin: 0 auto;
+        padding: 4rem 2rem 6rem;
+      }
+
+      .hero-section {
+        text-align: center;
+        margin-bottom: 3.5rem;
+        animation: fadeIn 1.2s ease both;
+      }
+
+      .hero-section h2 {
+        font-family: "Cinzel Decorative", serif;
+        font-size: clamp(1.4rem, 4vw, 2.4rem);
+        font-weight: 400;
+        letter-spacing: 0.08em;
+        color: var(--parchment);
+        margin-bottom: 1rem;
+      }
+
+      .hero-section .subtitle {
+        font-family: "Spectral", serif;
+        font-size: 1.05rem;
+        font-weight: 300;
+        font-style: italic;
+        color: var(--text-dim);
+        max-width: 420px;
+        margin: 0 auto;
+        line-height: 1.7;
+      }
+
+      .divider {
+        width: 60px;
+        height: 1px;
+        background: var(--crimson);
+        margin: 2.5rem auto;
+        opacity: 0.6;
+      }
+
+      /* ── BADGE ── */
+      .selo {
+        font-family: "Spectral", serif;
+        font-size: 0.7rem;
+        font-weight: 300;
+        font-style: italic;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--crimson-glow);
+        border: 1px solid rgba(139, 26, 26, 0.25);
+        padding: 0.35rem 1rem;
+        display: inline-block;
+        margin-bottom: 2.5rem;
+        animation: fadeIn 1s ease both;
+        animation-delay: 0.3s;
+      }
+
+      /* ── FORM ── */
+      .form-card {
+        background: linear-gradient(
+          160deg,
+          rgba(42, 42, 46, 0.5) 0%,
+          rgba(26, 26, 28, 0.8) 100%
+        );
+        border: 1px solid rgba(196, 185, 168, 0.06);
+        border-radius: 2px;
+        padding: 2.5rem 2rem;
+        position: relative;
+        overflow: hidden;
+        animation: slideUp 0.8s ease both;
+        animation-delay: 0.3s;
+      }
+
+      .form-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          var(--crimson),
+          transparent
+        );
+        opacity: 0.4;
+      }
+
+      .form-contato {
+        display: flex;
+        flex-direction: column;
+        gap: 1.4rem;
+      }
+
+      .field-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+
+      .form-contato label {
+        font-family: "Spectral", serif;
+        font-size: 0.82rem;
+        font-weight: 300;
+        font-style: italic;
+        color: var(--text-dim);
+        letter-spacing: 0.04em;
+      }
+
+      .form-contato input,
+      .form-contato textarea {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1rem;
+        font-weight: 400;
+        color: var(--parchment);
+        background: rgba(10, 10, 11, 0.6);
+        border: 1px solid rgba(196, 185, 168, 0.08);
+        border-radius: 1px;
+        padding: 0.75rem 1rem;
+        transition:
+          border-color 0.4s ease,
+          background 0.4s ease;
+        outline: none;
+      }
+
+      .form-contato input::placeholder,
+      .form-contato textarea::placeholder {
+        color: rgba(158, 149, 138, 0.4);
+        font-style: italic;
+      }
+
+      .form-contato input:focus,
+      .form-contato textarea:focus {
+        border-color: rgba(139, 26, 26, 0.4);
+        background: rgba(10, 10, 11, 0.8);
+      }
+
+      .form-contato textarea {
+        resize: vertical;
+        min-height: 140px;
+        line-height: 1.7;
+      }
+
+      .form-contato input[type="date"] {
+        color-scheme: dark;
+      }
+
+      .btn-submit {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 0.88rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--crimson-glow);
+        background: none;
+        border: 1px solid rgba(139, 26, 26, 0.3);
+        padding: 0.85rem 2rem;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        align-self: center;
+        margin-top: 0.5rem;
+      }
+
+      .btn-submit:hover {
+        background: rgba(139, 26, 26, 0.08);
+        border-color: rgba(139, 26, 26, 0.5);
+        color: var(--parchment);
+      }
+
+      .btn-submit:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* ── STATUS MESSAGES ── */
+      .form-status {
+        display: none;
+        text-align: center;
+        padding: 2rem 0;
+        animation: fadeIn 0.5s ease both;
+      }
+
+      .form-status.active {
+        display: block;
+      }
+
+      .form-status .icon {
+        font-size: 1.6rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .form-status .icon--success {
+        color: var(--crimson-glow);
+      }
+      .form-status .icon--error {
+        color: var(--text-dim);
+      }
+
+      .form-status p {
+        font-family: "Spectral", serif;
+        font-size: 0.95rem;
+        font-weight: 300;
+        font-style: italic;
+        color: var(--text-body);
+        line-height: 1.7;
+      }
+
+      .btn-retry {
+        display: inline-block;
+        margin-top: 1.2rem;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 0.82rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--crimson-glow);
+        border: 1px solid rgba(139, 26, 26, 0.3);
+        background: none;
+        padding: 0.5rem 1.4rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        align-self: center;
+      }
+
+      .btn-retry:hover {
+        background: rgba(139, 26, 26, 0.08);
+        border-color: rgba(139, 26, 26, 0.5);
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        padding: 2rem;
+        border-top: 1px solid rgba(196, 185, 168, 0.06);
+      }
+
+      footer p {
+        font-family: "Spectral", serif;
+        font-size: 0.78rem;
+        font-weight: 300;
+        font-style: italic;
+        color: var(--text-dim);
+        letter-spacing: 0.04em;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
         }
-
-        :root {
-            --ink: #0a0a0b;
-            --parchment: #e8e0d4;
-            --crimson: #8b1a1a;
-            --crimson-glow: #a52222;
-            --bone: #d4ccc0;
-            --ash: #2a2a2e;
-            --text-dim: #6b6560;
-            --text-body: #9e958a;
+        to {
+          opacity: 1;
         }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            background-color: var(--ink);
-            color: var(--parchment);
-            font-family: 'Cormorant Garamond', 'Georgia', serif;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
+      }
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
         }
-
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background:
-                radial-gradient(ellipse 80% 60% at 20% 10%, rgba(139, 26, 26, 0.04) 0%, transparent 70%),
-                radial-gradient(ellipse 60% 80% at 80% 90%, rgba(139, 26, 26, 0.03) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
-
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            opacity: 0.035;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 9999;
-        }
-
-        /* ── HEADER ── */
-        header {
-            position: relative;
-            z-index: 10;
-            padding: 2rem 2rem 1.5rem;
-            border-bottom: 1px solid rgba(196, 185, 168, 0.08);
-        }
-
-        #main-title {
-            font-family: 'Cinzel Decorative', 'Georgia', serif;
-            font-size: clamp(1.4rem, 3vw, 1.8rem);
-            font-weight: 400;
-            letter-spacing: 0.15em;
-            color: var(--parchment);
-            text-align: center;
-            margin-bottom: 1.2rem;
-        }
-
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 0.2rem;
-            flex-wrap: wrap;
-        }
-
-        nav a {
-            font-family: 'Spectral', serif;
-            font-size: 0.82rem;
-            font-weight: 300;
-            font-style: italic;
-            color: var(--text-dim);
-            text-decoration: none;
-            padding: 0.4rem 0.9rem;
-            letter-spacing: 0.04em;
-            transition: color 0.4s ease;
-            position: relative;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 2px;
-            left: 50%;
-            width: 0;
-            height: 1px;
-            background: var(--crimson);
-            transition: all 0.4s ease;
-            transform: translateX(-50%);
-        }
-
-        nav a:hover { color: var(--parchment); }
-        nav a:hover::after { width: 60%; }
-        nav a[aria-current="page"] { color: var(--crimson-glow); }
-        nav a[aria-current="page"]::after { width: 60%; background: var(--crimson); }
-
-        /* ── MAIN ── */
-        main {
-            position: relative;
-            z-index: 1;
-            max-width: 620px;
-            margin: 0 auto;
-            padding: 4rem 2rem 6rem;
-        }
-
-        .hero-section {
-            text-align: center;
-            margin-bottom: 3.5rem;
-            animation: fadeIn 1.2s ease both;
-        }
-
-        .hero-section h2 {
-            font-family: 'Cinzel Decorative', serif;
-            font-size: clamp(1.4rem, 4vw, 2.4rem);
-            font-weight: 400;
-            letter-spacing: 0.08em;
-            color: var(--parchment);
-            margin-bottom: 1rem;
-        }
-
-        .hero-section .subtitle {
-            font-family: 'Spectral', serif;
-            font-size: 1.05rem;
-            font-weight: 300;
-            font-style: italic;
-            color: var(--text-dim);
-            max-width: 420px;
-            margin: 0 auto;
-            line-height: 1.7;
-        }
-
-        .divider {
-            width: 60px;
-            height: 1px;
-            background: var(--crimson);
-            margin: 2.5rem auto;
-            opacity: 0.6;
-        }
-
-        /* ── BADGE ── */
-        .selo {
-            font-family: 'Spectral', serif;
-            font-size: 0.7rem;
-            font-weight: 300;
-            font-style: italic;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--crimson-glow);
-            border: 1px solid rgba(139, 26, 26, 0.25);
-            padding: 0.35rem 1rem;
-            display: inline-block;
-            margin-bottom: 2.5rem;
-            animation: fadeIn 1s ease both;
-            animation-delay: 0.3s;
-        }
-
-        /* ── FORM ── */
-        .form-card {
-            background: linear-gradient(160deg, rgba(42, 42, 46, 0.5) 0%, rgba(26, 26, 28, 0.8) 100%);
-            border: 1px solid rgba(196, 185, 168, 0.06);
-            border-radius: 2px;
-            padding: 2.5rem 2rem;
-            position: relative;
-            overflow: hidden;
-            animation: slideUp 0.8s ease both;
-            animation-delay: 0.3s;
-        }
-
-        .form-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--crimson), transparent);
-            opacity: 0.4;
-        }
-
-        .form-contato {
-            display: flex;
-            flex-direction: column;
-            gap: 1.4rem;
-        }
-
-        .field-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.45rem;
-        }
-
-        .form-contato label {
-            font-family: 'Spectral', serif;
-            font-size: 0.82rem;
-            font-weight: 300;
-            font-style: italic;
-            color: var(--text-dim);
-            letter-spacing: 0.04em;
-        }
-
-        .form-contato input,
-        .form-contato textarea {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1rem;
-            font-weight: 400;
-            color: var(--parchment);
-            background: rgba(10, 10, 11, 0.6);
-            border: 1px solid rgba(196, 185, 168, 0.08);
-            border-radius: 1px;
-            padding: 0.75rem 1rem;
-            transition: border-color 0.4s ease, background 0.4s ease;
-            outline: none;
-        }
-
-        .form-contato input::placeholder,
-        .form-contato textarea::placeholder {
-            color: rgba(158, 149, 138, 0.4);
-            font-style: italic;
-        }
-
-        .form-contato input:focus,
-        .form-contato textarea:focus {
-            border-color: rgba(139, 26, 26, 0.4);
-            background: rgba(10, 10, 11, 0.8);
-        }
-
-        .form-contato textarea {
-            resize: vertical;
-            min-height: 140px;
-            line-height: 1.7;
-        }
-
-        .form-contato input[type="date"] {
-            color-scheme: dark;
-        }
-
-        .btn-submit {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 0.88rem;
-            font-weight: 600;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--crimson-glow);
-            background: none;
-            border: 1px solid rgba(139, 26, 26, 0.3);
-            padding: 0.85rem 2rem;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            align-self: flex-start;
-            margin-top: 0.5rem;
-        }
-
-        .btn-submit:hover {
-            background: rgba(139, 26, 26, 0.08);
-            border-color: rgba(139, 26, 26, 0.5);
-            color: var(--parchment);
-        }
-
-        .btn-submit:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* ── STATUS MESSAGES ── */
-        .form-status {
-            display: none;
-            text-align: center;
-            padding: 2rem 0;
-            animation: fadeIn 0.5s ease both;
-        }
-
-        .form-status.active { display: block; }
-
-        .form-status .icon {
-            font-size: 1.6rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .form-status .icon--success { color: var(--crimson-glow); }
-        .form-status .icon--error { color: var(--text-dim); }
-
-        .form-status p {
-            font-family: 'Spectral', serif;
-            font-size: 0.95rem;
-            font-weight: 300;
-            font-style: italic;
-            color: var(--text-body);
-            line-height: 1.7;
-        }
-
-        .btn-retry {
-            display: inline-block;
-            margin-top: 1.2rem;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 0.82rem;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--crimson-glow);
-            border: 1px solid rgba(139, 26, 26, 0.3);
-            background: none;
-            padding: 0.5rem 1.4rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-retry:hover {
-            background: rgba(139, 26, 26, 0.08);
-            border-color: rgba(139, 26, 26, 0.5);
-        }
-
-        /* ── FOOTER ── */
-        footer {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            padding: 2rem;
-            border-top: 1px solid rgba(196, 185, 168, 0.06);
-        }
-
-        footer p {
-            font-family: 'Spectral', serif;
-            font-size: 0.78rem;
-            font-weight: 300;
-            font-style: italic;
-            color: var(--text-dim);
-            letter-spacing: 0.04em;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+      }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
     <header>
-        <h1 id="main-title">O Subterfúgio</h1>
-        <nav>
-            <a href="index.html">Início</a>
-            <a href="escritores.html">Escritores</a>
-            <a href="donereads.html">Leituras</a>
-            <a href="contos.html">Contos</a>
-            <a href="contato.html" aria-current="page">Contato</a>
-            <a href="sobre.html">Sobre</a>
-            <a href="galeria.html">Dark Art</a>
-            <a href="tracks.html">Tracks</a>
-        </nav>
+      <h1 id="main-title">O Subterfúgio</h1>
+      <nav>
+        <a href="index.html">Início</a>
+        <a href="escritores.html">Escritores</a>
+        <a href="donereads.html">Leituras</a>
+        <a href="contos.html">Contos</a>
+        <a href="contato.html" aria-current="page">Contato</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="galeria.html">Dark Art</a>
+        <a href="tracks.html">Tracks</a>
+      </nav>
     </header>
 
     <main>
-        <section class="hero-section">
-            <h2>Sugira um Livro ou Conto</h2>
-            <div class="divider"></div>
-            <p class="subtitle">Preencha os campos abaixo para enviar a sua indicação literária. Se você
-            Já leu ou é entusiasta da saga Prepúsculo saia daqui imediatamente.</p>
-        </section>
+      <section class="hero-section">
+        <h2>Sugira um Livro ou Conto</h2>
+        <div class="divider"></div>
+        <p class="subtitle">
+          Preencha os campos abaixo para enviar a sua indicação literária.
+        </p>
+      </section>
 
-        <div style="text-align: center;">
-            <span class="selo">Cuidado</span>
+      <div style="text-align: center">
+        <span class="selo">Nova Recomendação</span>
+      </div>
+
+      <div class="form-card">
+        <form id="form-sugestao" class="form-contato">
+          <!-- Web3Forms access key -->
+          <input
+            type="hidden"
+            name="access_key"
+            value="bd791b84-7da4-4e97-8c0d-e9ce5f12b727"
+          />
+
+          <!-- Customiza o assunto do email que recebes -->
+          <input
+            type="hidden"
+            name="subject"
+            value="Nova Sugestão Literária — O Subterfúgio"
+          />
+
+          <!-- Nome do formulário para identificação -->
+          <input type="hidden" name="from_name" value="O Subterfúgio" />
+
+          <!-- Honeypot anti-spam (invisível para humanos) -->
+          <input type="checkbox" name="botcheck" style="display: none" />
+
+          <div class="field-group">
+            <label for="nome">Seu Nome</label>
+            <input
+              type="text"
+              id="nome"
+              name="nome"
+              required
+              placeholder="Digite seu nome completo"
+            />
+          </div>
+
+          <div class="field-group">
+            <label for="email">E-mail de Contato</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              placeholder="exemplo@email.com"
+            />
+          </div>
+
+          <!-- Web3Forms usa este campo para reply-to automático -->
+          <input type="hidden" name="replyto" id="replyto" />
+
+          <div class="field-group">
+            <label for="data">Data da Sugestão</label>
+            <input type="date" id="data" name="data" required />
+          </div>
+
+          <div class="field-group">
+            <label for="obra">Título da Obra</label>
+            <input
+              type="text"
+              id="obra"
+              name="obra"
+              required
+              placeholder="Nome do livro ou conto"
+            />
+          </div>
+
+          <div class="field-group">
+            <label for="mensagem">Por que recomenda esta leitura?</label>
+            <textarea
+              id="mensagem"
+              name="mensagem"
+              rows="6"
+              required
+              placeholder="Escreva brevemente sobre a obra..."
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn-submit" id="btn-enviar">
+            Enviar Sugestão
+          </button>
+        </form>
+
+        <div class="form-status" id="success-msg">
+          <div class="icon icon--success">✦</div>
+          <p>
+            Sugestão enviada com sucesso.<br />Obrigado pela recomendação — vais
+            receber uma cópia no teu email.
+          </p>
         </div>
 
-        <div class="form-card">
-            <form id="form-sugestao" class="form-contato">
-                <!-- Web3Forms access key -->
-                <input type="hidden" name="access_key" value="bd791b84-7da4-4e97-8c0d-e9ce5f12b727">
-
-                <!-- Customiza o assunto do email que recebes -->
-                <input type="hidden" name="subject" value="Nova Sugestão Literária — O Subterfúgio">
-
-                <!-- Nome do formulário para identificação -->
-                <input type="hidden" name="from_name" value="O Subterfúgio">
-
-                <!-- Honeypot anti-spam (invisível para humanos) -->
-                <input type="checkbox" name="botcheck" style="display: none;">
-
-                <div class="field-group">
-                    <label for="nome">Seu Nome</label>
-                    <input type="text" id="nome" name="nome" required placeholder="Digite seu nome completo">
-                </div>
-
-                <div class="field-group">
-                    <label for="email">E-mail de Contato</label>
-                    <input type="email" id="email" name="email" required placeholder="exemplo@email.com">
-                </div>
-
-                <!-- Web3Forms usa este campo para reply-to automático -->
-                <input type="hidden" name="replyto" id="replyto">
-
-                <div class="field-group">
-                    <label for="data">Data da Sugestão</label>
-                    <input type="date" id="data" name="data" required>
-                </div>
-
-                <div class="field-group">
-                    <label for="obra">Título da Obra</label>
-                    <input type="text" id="obra" name="obra" required placeholder="Nome do livro ou conto">
-                </div>
-
-                <div class="field-group">
-                    <label for="mensagem">Por que recomenda esta leitura?</label>
-                    <textarea id="mensagem" name="mensagem" rows="6" required placeholder="Escreva brevemente sobre a obra..."></textarea>
-                </div>
-
-                <button type="submit" class="btn-submit" id="btn-enviar">Senta o Dedo</button>
-            </form>
-
-            <div class="form-status" id="success-msg">
-                <div class="icon icon--success">✦</div>
-                <p>Sugestão enviada com sucesso.<br>Obrigado pela recomendação — vais receber uma cópia no teu email.</p>
-            </div>
-
-            <div class="form-status" id="error-msg">
-                <div class="icon icon--error">✕</div>
-                <p>Não foi possível enviar a sugestão.<br>Verifica a tua ligação e tenta novamente.</p>
-                <button class="btn-retry" id="btn-retry">Tentar novamente</button>
-            </div>
+        <div class="form-status" id="error-msg">
+          <div class="icon icon--error">✕</div>
+          <p>
+            Não foi possível enviar a sugestão.<br />Verifica a tua ligação e
+            tenta novamente.
+          </p>
+          <button class="btn-retry" id="btn-retry">Tentar novamente</button>
         </div>
+      </div>
     </main>
 
     <footer>
-        <p>&copy; 2026 — Diário de Leituras | Fausto Pantagruel</p>
+      <p>&copy; 2026 — Diário de Leituras | Fausto Pantagruel</p>
     </footer>
 
     <script>
-        var form = document.getElementById('form-sugestao');
-        var btnEnviar = document.getElementById('btn-enviar');
-        var successMsg = document.getElementById('success-msg');
-        var errorMsg = document.getElementById('error-msg');
-        var btnRetry = document.getElementById('btn-retry');
-        var emailField = document.getElementById('email');
-        var replytoField = document.getElementById('replyto');
+      var form = document.getElementById("form-sugestao");
+      var btnEnviar = document.getElementById("btn-enviar");
+      var successMsg = document.getElementById("success-msg");
+      var errorMsg = document.getElementById("error-msg");
+      var btnRetry = document.getElementById("btn-retry");
+      var emailField = document.getElementById("email");
+      var replytoField = document.getElementById("replyto");
 
-        // Sync reply-to with the email field
-        emailField.addEventListener('input', function() {
-            replytoField.value = emailField.value;
-        });
+      // Sync reply-to with the email field
+      emailField.addEventListener("input", function () {
+        replytoField.value = emailField.value;
+      });
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
 
-            // Sync reply-to one final time
-            replytoField.value = emailField.value;
+        // Sync reply-to one final time
+        replytoField.value = emailField.value;
 
-            btnEnviar.disabled = true;
-            btnEnviar.textContent = 'A enviar...';
+        btnEnviar.disabled = true;
+        btnEnviar.textContent = "A enviar...";
 
-            var formData = new FormData(form);
+        var formData = new FormData(form);
 
-            fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                body: formData
-            })
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(data) {
-                if (data.success) {
-                    form.style.display = 'none';
-                    successMsg.classList.add('active');
-                } else {
-                    form.style.display = 'none';
-                    errorMsg.classList.add('active');
-                }
-            })
-            .catch(function() {
-                form.style.display = 'none';
-                errorMsg.classList.add('active');
-            });
-        });
+        fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          body: formData,
+        })
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (data) {
+            if (data.success) {
+              form.style.display = "none";
+              successMsg.classList.add("active");
+            } else {
+              form.style.display = "none";
+              errorMsg.classList.add("active");
+            }
+          })
+          .catch(function () {
+            form.style.display = "none";
+            errorMsg.classList.add("active");
+          });
+      });
 
-        btnRetry.addEventListener('click', function() {
-            errorMsg.classList.remove('active');
-            form.style.display = 'flex';
-            btnEnviar.disabled = false;
-            btnEnviar.textContent = 'Enviar Sugestão';
-        });
+      btnRetry.addEventListener("click", function () {
+        errorMsg.classList.remove("active");
+        form.style.display = "flex";
+        btnEnviar.disabled = false;
+        btnEnviar.textContent = "Enviar Sugestão";
+      });
     </script>
-
-</body>
+  </body>
 </html>
