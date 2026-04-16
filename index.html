@@ -61,7 +61,7 @@
         background-size: cover;
         background-position: center top;
         background-repeat: no-repeat;
-        background-attachment: fixed;
+        background-attachment: scroll; /* 'fixed' causes jank/bugs on iOS Safari */
         opacity: 0.06;
         pointer-events: none;
         z-index: 0;
@@ -228,11 +228,100 @@
         gap: 2rem;
       }
 
-      @media (max-width: 700px) {
+      /* Tablet: 2 columns */
+      @media (max-width: 900px) {
+        .books-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1.5rem;
+        }
+      }
+
+      /* Mobile: single column and tighter spacing */
+      @media (max-width: 600px) {
+        header {
+          padding: 1.5rem 1rem 1rem;
+        }
+
+        #main-title {
+          margin-bottom: 1rem;
+        }
+
+        nav {
+          gap: 0;
+          row-gap: 0.1rem;
+        }
+
+        nav a {
+          font-size: 0.78rem;
+          padding: 0.5rem 0.6rem; /* larger tap target vertically */
+        }
+
+        main {
+          padding: 2.5rem 1.25rem 4rem;
+        }
+
+        .hero-section {
+          margin-bottom: 3rem;
+        }
+
+        .hero-section .subtitle {
+          font-size: 1rem;
+          padding: 0 0.5rem;
+        }
+
+        .divider {
+          margin: 1.8rem auto;
+        }
+
         .books-grid {
           grid-template-columns: 1fr;
           max-width: 320px;
           margin: 0 auto;
+          gap: 1.5rem;
+        }
+
+        .book-info {
+          padding: 1rem;
+        }
+
+        .quote-section {
+          margin-top: 3rem;
+          padding: 2.5rem 1rem;
+        }
+
+        .quote-section blockquote {
+          font-size: 1.1rem;
+        }
+
+        footer {
+          padding: 1.5rem 1rem;
+        }
+      }
+
+      /* Very small phones */
+      @media (max-width: 360px) {
+        nav a {
+          font-size: 0.72rem;
+          padding: 0.45rem 0.45rem;
+        }
+
+        main {
+          padding: 2rem 1rem 3rem;
+        }
+      }
+
+      /* Disable hover-only effects on touch devices to avoid sticky hover states */
+      @media (hover: none) {
+        .book-card:hover {
+          transform: none;
+          border-color: rgba(196, 185, 168, 0.06);
+        }
+        .book-card:hover .book-cover img {
+          transform: none;
+          opacity: 0.88;
+        }
+        .book-card:hover::before {
+          opacity: 0;
         }
       }
 
